@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringMVC</title>
+</head>
+<body>
+    <table align="center" border="4" bgcolor="#f5f5f5" width="60%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Возраст</th>
+            <th colspan="2">Редактировать/Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${users.isEmpty()}">
+            <th align="center" colspan="5" style="color: red">База данных пуста</th>
+        </tr>
+        <tr th:each="user: ${users}" align="center">
+            <td><a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getId()}">user</a></td>
+            <td th:text="${user.getName()}"/>
+            <td th:text="${user.getLastName()}"/>
+            <td th:text="${user.getAge()}"/>
+            <td><form th:action="@{/users/{id}/edit(id=${user.getId()})}">
+                <input type="submit" value="редактировать" style="color: green"/>
+            </form></td>
+            <td><form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+                <input type="submit" value="удалить" style="color: red"/>
+            </form></td>
+
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{users/new}">
+        <input type="submit" value="Добавить нового пользователя" style="color-scheme: dark"/>
+    </form>
+</body>
+</html>
